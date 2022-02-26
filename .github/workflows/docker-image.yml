@@ -24,5 +24,5 @@ jobs:
     - name: Push Container to ACR
       working-directory: .
       run: |
-        docker build . -t ${{ secrets.ACR_LOGIN_SERVER }}/places-api::${{ github.sha }}
-        docker push ${{ secrets.ACR_LOGIN_SERVER }}/places-api::${{ github.sha }}
+        docker build . -t ${{ secrets.ACR_LOGIN_SERVER }}/places-api:${{ github.sha }}
+        docker push ${{ secrets.ACR_LOGIN_SERVER }}/places-api:${{ github.sha }}
