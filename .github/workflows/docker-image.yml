@@ -30,3 +30,4 @@ jobs:
         docker push ${{ secrets.ACR_LOGIN_SERVER }}/places-api:${{ github.sha }}
         docker tag ${{ secrets.ACR_LOGIN_SERVER }}/places-api:${{ github.sha }} ${{ secrets.ACR_LOGIN_SERVER }}/places-api:latest
         docker push ${{ secrets.ACR_LOGIN_SERVER }}/places-api:latest
+        curl ${{ secrets.ACR_WEBHOOK }} -H "" -d ""
