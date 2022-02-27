@@ -19,6 +19,8 @@ export const RequireScope = createParamDecorator((data:string[], ctx:ExecutionCo
     let hasPermission = matchedScopes.length > 0;
 
     return {
+        // return the original payload
+        user,
         // here we will return an objct with a method on it that will help us to determine
         // if the user has permission and at what level.  The 'adminScopes' argument to this
         // method is used to determine if we need to return the name of the user who is 

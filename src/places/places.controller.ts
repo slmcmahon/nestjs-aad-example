@@ -21,8 +21,10 @@ export class PlacesController {
     "Places.ReadWrite",
     "Places.ReadWrite.All"
   ]) auth: any, @Body() createPlaceDto: CreatePlaceDto) {
-    let owner = auth.authorize([]);
-    return this.placesService.create(createPlaceDto, owner);
+    auth.authorize([]);
+    // since we always want the oid here, we only authorize and 
+    // get the oid of the user if authorized.
+    return this.placesService.create(createPlaceDto, auth.user.oid);
   }
 
   @ApiOkResponse({ type: Place, isArray: true })
