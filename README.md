@@ -45,3 +45,9 @@ To test this, you'll need to first acquire an access token for your "Places Clie
 ```
 Authorization: Bearer <your-token>
 ```
+
+Lastly, you'll need to add a "2dsphere" index on the "places" collection after it has been created.  You can do that with:
+
+```json
+db.places.createIndex({"position":"2dsphere"})
+```

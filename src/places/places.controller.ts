@@ -38,7 +38,6 @@ export class PlacesController {
     "Places.ReadWrite.All"
   ]) auth: any, @Query("name") name?: string) {
     let owner = auth.authorize();
-    console.log(owner);
     return this.placesService.findAll(name, owner);
   }
 
@@ -51,7 +50,6 @@ export class PlacesController {
     "Places.ReadWrite.All"
   ]) auth: any, @Param('id') id: string) {
     let owner = auth.authorize();
-    console.log(owner);
     return this.placesService.findOne(id, owner);
   }
 

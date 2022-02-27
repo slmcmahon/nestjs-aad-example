@@ -10,6 +10,9 @@ export class CreatePlaceDto {
     description: string;
 
     @ApiProperty()
+    type: string;
+
+    @ApiProperty()
     @IsNumber()
     latitude: number;
 

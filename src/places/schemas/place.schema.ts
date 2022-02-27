@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Document } from 'mongoose';
-import { pipeline } from 'stream';
 
 export type PlaceDocument = Place & Document;
 
@@ -9,11 +8,15 @@ export type PlaceDocument = Place & Document;
 export class Place {
     @ApiProperty({ description: "The name of the location" })
     @Prop()
-    name: string
+    name: string;
 
     @Prop()
     @ApiProperty({ description: "A description of the location" })
-    description: string
+    description: string;
+
+    @Prop()
+    @ApiProperty({ description: "The place type (e.g. hotel, restaurant, residential, etc.)"})
+    type: string;
 
     /*
        In order to run queries on this value, you will need to create a 2dsphere index in MongoDB.
@@ -25,6 +28,7 @@ export class Place {
         coordinates: { type: [Number] }
     }))
     @ApiProperty({
+        description: "GPS Coordinates.",
         type: "object",
         properties: {
             name: {
@@ -40,32 +44,27 @@ export class Place {
             }
         }
     })
-    position: Record<string, any>
-
-    @Prop()
-    @ApiProperty()
-    boundsType: string
+    position: Record<string, any>;
 
     @Prop(raw({
+        street: { type: String },
         city: { type: String },
         state: { type: String },
-        country: { type: String },
-        region: { type: String },
-        zoneType: { type: String },
-        zoneCode: { type: String }
+        postalCode: { type: String },
+        country: { type: String }
     }))
     @ApiProperty({
+        description: "Address details",
         type: "object",
         properties: {
+            street: { type: "string" },
             city: { type: "string" },
             state: { type: "string" },
-            country: { type: "string" },
-            region: { type: "string" },
-            zoneType: { type: "string" },
-            zoneCode: { type: "string" }
+            postalCode: {type: "string" },
+            country: { type: "string" }
         }
     })
-    address: Record<string, any>
+    address: Record<string, any>;
 
     @Prop(raw({
         createdBy: { type: String },
@@ -75,6 +74,7 @@ export class Place {
         owner: { type: String }
     }))
     @ApiProperty({
+        description: "Auditing Details",
         type: "object",
         properties: {
             createdBy: { type: "string" },
@@ -84,7 +84,7 @@ export class Place {
             owner: { type: "string" }
         }
     })
-    auditing: Record<string, any>
+    auditing: Record<string, any>;
 }
 
 export const PlaceSchema = SchemaFactory.createForClass(Place);

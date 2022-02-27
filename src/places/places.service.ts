@@ -93,14 +93,13 @@ export class PlacesService {
     return {
       name: dto.name,
       description: dto.description,
-      boundsType: dto.boundsType,
+      type: dto.type,
       address: {
+        street: dto.address.street,
         city: dto.address.city,
         state: dto.address.state,
-        country: dto.address.country,
-        region: dto.address.region,
-        zoneType: dto.address.zoneType,
-        zoneCode: dto.address.zoneCode
+        postalCode: dto.address.postalCode,
+        country: dto.address.country
       },
       position: {
         type: "Point",
