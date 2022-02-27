@@ -1,6 +1,6 @@
 import { createParamDecorator, ExecutionContext, UnauthorizedException } from "@nestjs/common";
 
-export const RequireScope = createParamDecorator((data:string[], ctx:ExecutionContext) => {
+export const ValidScopes = createParamDecorator((data:string[], ctx:ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
     const user = request.user;
 
