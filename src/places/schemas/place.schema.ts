@@ -15,6 +15,11 @@ export class Place {
     @ApiProperty({ description: "A description of the location" })
     description: string
 
+    /*
+       In order to run queries on this value, you will need to create a 2dsphere index in MongoDB.
+       To do that, find the places collection and run this:
+       db.places.createIndex({"position":"2dsphere"})
+    */
     @Prop(raw({
         type: { type: String },
         coordinates: { type: [Number] }

@@ -5,7 +5,7 @@ import { UpdatePlaceDto } from './dto/update-place.dto';
 import { ApiBearerAuth, ApiNotFoundResponse, ApiOkResponse, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Place } from './schemas/place.schema';
 import { AzureADGuard } from '../auth/azure-ad.guard';
-import { RequireScope } from 'src/auth/auth.decorator';
+import { ValidScopes } from '../auth/valid-scopes.decorator';
 import { getDistanceDto } from './dto/get-distance.dto';
 
 @ApiTags("Places")
@@ -18,7 +18,7 @@ export class PlacesController {
   @ApiOkResponse({ type: Place })
   @ApiUnauthorizedResponse()
   @Post()
-  create(@RequireScope([
+  create(@ValidScopes([
     "Places.ReadWrite",
     "Places.ReadWrite.All"
   ]) auth: any, @Body() createPlaceDto: CreatePlaceDto) {
@@ -32,7 +32,7 @@ export class PlacesController {
   @ApiNotFoundResponse()
   @ApiQuery({ name: 'name', required: false })
   @Get()
-  findAll(@RequireScope([
+  findAll(@ValidScopes([
     "Places.Read",
     "Places.ReadWrite",
     "Places.ReadWrite.All"
@@ -45,7 +45,7 @@ export class PlacesController {
   @ApiOkResponse({ type: Place })
   @ApiNotFoundResponse()
   @Get(':id')
-  findOne(@RequireScope([
+  findOne(@ValidScopes([
     "Places.Read",
     "Places.ReadWrite",
     "Places.ReadWrite.All"
@@ -57,7 +57,7 @@ export class PlacesController {
 
   @ApiOkResponse({ type: getDistanceDto })
   @Get(':fromId/distanceto/:toId')
-  getDistance(@RequireScope([
+  getDistance(@ValidScopes([
     "Places.Read",
     "Places.ReadWrite",
     "Places.ReadWrite.All"
@@ -76,7 +76,7 @@ export class PlacesController {
   @ApiOkResponse({ type: Place })
   @ApiNotFoundResponse()
   @Delete(':id')
-  remove(@RequireScope([
+  remove(@ValidScopes([
     "Places.ReadWrite",
     "Places.ReadWrite.All"
   ]) auth: any, @Param('id') id: string) {
