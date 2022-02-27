@@ -54,7 +54,11 @@ export class PlacesController {
 
   @ApiOkResponse({ type: getDistanceDto })
   @Get(':fromId/distanceto/:toId')
-  getDistance(@RequireScope(["Places.Read"]) auth: any, @Param('fromId') fromId: string, @Param('toId') toId: string) {
+  getDistance(@RequireScope([
+    "Places.Read",
+    "Places.ReadWrite",
+    "Places.ReadWrite.All"
+  ]) auth: any, @Param('fromId') fromId: string, @Param('toId') toId: string) {
     auth.authorize();
     return this.placesService.calcDistance(fromId, toId);
   }
