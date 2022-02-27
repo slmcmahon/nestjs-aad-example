@@ -47,6 +47,8 @@ export class PlacesController {
   @Get(':id')
   findOne(@RequireScope([
     "Places.Read",
+    "Places.ReadWrite",
+    "Places.ReadWrite.All"
   ]) auth: any, @Param('id') id: string) {
     let owner = auth.authorize();
     console.log(owner);
