@@ -12,6 +12,14 @@ async function bootstrap() {
     .setTitle("Places API")
     .setDescription("Stores information about places")
     .setVersion("1.0")
+    .addBearerAuth({
+      description: "Please provide a valid Bearer token",
+      name: "Authorization",
+      bearerFormat: "Bearer",
+      scheme: "Bearer",
+      type: "http",
+      in: "Header"
+    })
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } f
 import { PlacesService } from './places.service';
 import { CreatePlaceDto } from './dto/create-place.dto';
 import { UpdatePlaceDto } from './dto/update-place.dto';
-import { ApiNotFoundResponse, ApiOkResponse, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiNotFoundResponse, ApiOkResponse, ApiQuery, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { Place } from './schemas/place.schema';
 import { AzureADGuard } from '../auth/azure-ad.guard';
 import { RequireScope } from 'src/auth/auth.decorator';
@@ -10,6 +10,7 @@ import { getDistanceDto } from './dto/get-distance.dto';
 
 @ApiTags("Places")
 @Controller('places')
+@ApiBearerAuth()
 @UseGuards(AzureADGuard)
 export class PlacesController {
   constructor(private readonly placesService: PlacesService) { }
