@@ -6,6 +6,7 @@ import { ApiNotFoundResponse, ApiOkResponse, ApiQuery, ApiTags, ApiUnauthorizedR
 import { Place } from './schemas/place.schema';
 import { AzureADGuard } from '../auth/azure-ad.guard';
 import { RequireScope } from 'src/auth/auth.decorator';
+import { getDistanceDto } from './dto/get-distance.dto';
 
 @ApiTags("Places")
 @Controller('places')
@@ -34,6 +35,7 @@ export class PlacesController {
     "Places.ReadWrite.All"
   ]) auth: any, @Query("name") name?: string) {
     let owner = auth.authorize();
+    console.log(owner);
     return this.placesService.findAll(name, owner);
   }
 
@@ -44,7 +46,15 @@ export class PlacesController {
     "Places.Read",
   ]) auth: any, @Param('id') id: string) {
     let owner = auth.authorize();
+    console.log(owner);
     return this.placesService.findOne(id, owner);
+  }
+
+  @ApiOkResponse({ type: getDistanceDto })
+  @Get(':fromId/distanceto/:toId')
+  getDistance(@RequireScope(["Places.Read"]) auth: any, @Param('fromId') fromId: string, @Param('toId') toId: string) {
+    auth.authorize();
+    return this.placesService.calcDistance(fromId, toId);
   }
 
   @ApiOkResponse({ type: Place })
